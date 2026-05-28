@@ -38,15 +38,23 @@ function extractJson(text: string) {
   return JSON.parse(raw.slice(start, end + 1));
 }
 
-export const Route = createFileRoute("/api/diagnose")({
-  server: {
-    handlers: {
-      POST: async ({ request }) => {
         try {
-          const { image, lang } = (await request.json()) as { image: string; lang: "en" | "ky" };
+          const { image, lang, symptoms, notes, season } = (await request.json()) as {
+            image: string;
+            lang: "en" | "ky";
+            symptoms?: string[];
+            notes?: string;
+            season?: string;
+          };
           const key = process.env.LOVABLE_API_KEY;
           if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
           if (!image?.startsWith("data:image/")) return new Response("invalid image", { status: 400 });
+
+          const symptomBlock = symptoms && symptoms.length
+            ? `Beekeeper-reported symptoms: ${symptoms.join("; ")}.`
+            : "Beekeeper reported no specific symptoms.";
+          const notesBlock = notes ? `Beekeeper notes: ${notes.slice(0, 600)}.` : "";
+          const seasonBlock = season ? `Current season: ${season}.` : "";
 
           const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
             method: "POST",
@@ -57,7 +65,10 @@ export const Route = createFileRoute("/api/diagnose")({
                 {
                   role: "user",
                   content: [
-                    { type: "text", text: `${PROMPT}\n\nOutput language preference: ${lang === "ky" ? "Kyrgyz" : "English"} (but keep both "disease" in English and "diseaseKy" in Kyrgyz).` },
+                    {
+                      type: "text",
+                      text: `${PROMPT}\n\nOutput language preference: ${lang === "ky" ? "Kyrgyz" : "English"} (but keep both "disease" in English and "diseaseKy" in Kyrgyz).\n\n${seasonBlock}\n${symptomBlock}\n${notesBlock}\n\nWeigh the reported symptoms together with what you see in the photo. If symptoms strongly point to a disease that is not visible in the photo, mention it in observations.`,
+                    },
                     { type: "image_url", image_url: { url: image } },
                   ],
                 },
@@ -65,7 +76,6 @@ export const Route = createFileRoute("/api/diagnose")({
             }),
           });
 
-          if (!res.ok) {
             const text = await res.text();
             return new Response(text || "AI error", { status: res.status });
           }
