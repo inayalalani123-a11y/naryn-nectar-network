@@ -73,13 +73,10 @@ function DiagnosePage() {
   const analyze = async () => {
     if (!preview) return;
     setLoading(true);
-    setResult(null);
-    try {
-      const symptomLabels = Array.from(checked).map((k) => (
-        // English labels so the model gets stable terms
-        // @ts-expect-error indexing by key
-        (require("@/lib/i18n") as { dict: typeof Dict }).dict?.[k]?.en
-      )).filter(Boolean);
+      const symptomLabels = Array.from(checked)
+        .map((k) => dict[k]?.en)
+        .filter((v): v is string => Boolean(v));
+
       const res = await fetch("/api/diagnose", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
