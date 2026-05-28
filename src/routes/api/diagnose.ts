@@ -38,7 +38,12 @@ function extractJson(text: string) {
   return JSON.parse(raw.slice(start, end + 1));
 }
 
+export const Route = createFileRoute("/api/diagnose")({
+  server: {
+    handlers: {
+      POST: async ({ request }) => {
         try {
+
           const { image, lang, symptoms, notes, season } = (await request.json()) as {
             image: string;
             lang: "en" | "ky";
