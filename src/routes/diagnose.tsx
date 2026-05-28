@@ -72,7 +72,10 @@ function DiagnosePage() {
 
   const analyze = async () => {
     if (!preview) return;
-    setLoading(true);
+    setResult(null);
+    try {
+      const symptomLabels = Array.from(checked)
+
       const symptomLabels = Array.from(checked)
         .map((k) => dict[k]?.en)
         .filter((v): v is string => Boolean(v));
