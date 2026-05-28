@@ -1,16 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef } from "react";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, dict } from "@/lib/i18n";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload, Loader2, AlertTriangle, Leaf, Stethoscope } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Upload, Loader2, AlertTriangle, Leaf, Stethoscope, ClipboardList } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/diagnose")({
   head: () => ({
     meta: [
       { title: "Hive disease checker — Naryn Bee" },
-      { name: "description", content: "Upload a photo of your hive. AI detects varroatosis, nosematosis, ascospherosis, foulbrood and suggests honey-safe natural remedies." },
+      { name: "description", content: "Upload a photo of your hive and answer a quick symptoms survey. AI detects varroatosis, nosematosis, ascospherosis, foulbrood and suggests honey-safe natural remedies." },
     ],
   }),
   component: DiagnosePage,
@@ -26,12 +30,37 @@ type Diagnosis = {
   followUp: string;
 };
 
+type SymptomKey =
+  | "sym.deadBees" | "sym.crawling" | "sym.deformedWings" | "sym.spottedBrood"
+  | "sym.chalkMummies" | "sym.ropyBrood" | "sym.diarrhea" | "sym.varrоaMites"
+  | "sym.weakColony" | "sym.webbing" | "sym.noQueen" | "sym.robbing";
+
+const SYMPTOMS: SymptomKey[] = [
+  "sym.deadBees", "sym.crawling", "sym.deformedWings", "sym.spottedBrood",
+  "sym.chalkMummies", "sym.ropyBrood", "sym.diarrhea", "sym.varrоaMites",
+  "sym.weakColony", "sym.webbing", "sym.noQueen", "sym.robbing",
+];
+
+const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
+type Season = typeof SEASONS[number];
+
 function DiagnosePage() {
   const { t, lang } = useI18n();
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Diagnosis | null>(null);
+  const [checked, setChecked] = useState<Set<SymptomKey>>(new Set());
+  const [notes, setNotes] = useState("");
+  const [season, setSeason] = useState<Season | "">("");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const toggle = (k: SymptomKey) => {
+    setChecked((prev) => {
+      const next = new Set(prev);
+      next.has(k) ? next.delete(k) : next.add(k);
+      return next;
+    });
+  };
 
   const onFile = (f: File) => {
     if (f.size > 8 * 1024 * 1024) { toast.error("Max 8 MB"); return; }
@@ -43,13 +72,22 @@ function DiagnosePage() {
 
   const analyze = async () => {
     if (!preview) return;
-    setLoading(true);
     setResult(null);
     try {
+      const symptomLabels = Array.from(checked)
+        .map((k) => dict[k]?.en)
+        .filter((v): v is string => Boolean(v));
+
       const res = await fetch("/api/diagnose", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: preview, lang }),
+        body: JSON.stringify({
+          image: preview,
+          lang,
+          symptoms: symptomLabels,
+          notes: notes.slice(0, 600),
+          season: season || undefined,
+        }),
       });
       if (!res.ok) {
         const e = await res.text();
@@ -103,15 +141,77 @@ function DiagnosePage() {
           ) : (
             <div className="space-y-4">
               <img src={preview} alt="Hive preview" className="mx-auto max-h-[420px] rounded-xl border border-border object-contain" />
-              <div className="flex flex-wrap gap-3">
-                <Button variant="outline" onClick={() => { setPreview(null); setResult(null); }}>
-                  {t("diag.upload")}
-                </Button>
-                <Button className="bg-honey text-honey-foreground hover:bg-honey/90" disabled={loading} onClick={analyze}>
-                  {loading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("diag.analyzing")}</> : t("diag.analyze")}
-                </Button>
-              </div>
+              <Button variant="outline" onClick={() => { setPreview(null); setResult(null); }}>
+                {t("diag.upload")}
+              </Button>
             </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="mt-6 border-border/70 bg-card">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 font-display text-2xl text-forest">
+            <ClipboardList className="h-5 w-5" /> {t("diag.survey.title")}
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">{t("diag.survey.sub")}</p>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid gap-3 sm:grid-cols-2">
+            {SYMPTOMS.map((k) => (
+              <label key={k} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border bg-secondary/30 p-3 transition hover:border-honey/60">
+                <Checkbox checked={checked.has(k)} onCheckedChange={() => toggle(k)} className="mt-0.5" />
+                <span className="text-sm text-foreground/90">{t(k)}</span>
+              </label>
+            ))}
+          </div>
+
+          <div>
+            <Label className="mb-2 block text-sm font-semibold text-forest">{t("diag.survey.season")}</Label>
+            <div className="flex flex-wrap gap-2">
+              {SEASONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSeason(season === s ? "" : s)}
+                  className={`rounded-full border px-4 py-1.5 text-sm transition ${
+                    season === s
+                      ? "border-honey bg-honey text-honey-foreground"
+                      : "border-border bg-secondary/40 text-foreground/80 hover:border-honey/60"
+                  }`}
+                >
+                  {t(`diag.survey.season.${s}` as keyof typeof dict)}
+
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <Label htmlFor="notes" className="mb-2 block text-sm font-semibold text-forest">
+              {t("diag.survey.notes")}
+            </Label>
+            <Textarea
+              id="notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value.slice(0, 600))}
+              placeholder={t("diag.survey.notesPh")}
+              rows={3}
+            />
+            <div className="mt-1 text-right text-xs text-muted-foreground">{notes.length}/600</div>
+          </div>
+
+          <Button
+            className="w-full bg-honey text-honey-foreground hover:bg-honey/90 sm:w-auto"
+            disabled={loading || !preview}
+            onClick={analyze}
+          >
+            {loading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("diag.analyzing")}</> : t("diag.analyze")}
+          </Button>
+          {!preview && (
+            <p className="text-xs text-muted-foreground">
+              {lang === "ky" ? "Талдоо үчүн адегенде сүрөт жүктө." : "Upload a photo above to enable analysis."}
+            </p>
           )}
         </CardContent>
       </Card>
