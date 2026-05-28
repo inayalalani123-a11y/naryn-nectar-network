@@ -75,10 +75,11 @@ function extractJson(text: string) {
               ],
             }),
           });
-
+          if (!res.ok) {
             const text = await res.text();
             return new Response(text || "AI error", { status: res.status });
           }
+
           const data = await res.json();
           const text: string = data?.choices?.[0]?.message?.content ?? "";
           const parsed = extractJson(text);
