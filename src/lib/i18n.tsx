@@ -18,7 +18,13 @@ export const dict: Dict = {
 
   "learn.title": { en: "Beekeeping modules", ky: "Аарычылык сабактары" },
   "learn.sub": { en: "Practical lessons for rural mountain families.", ky: "Тоодогу үй-бүлөлөр үчүн практикалык сабактар." },
-  "learn.read": { en: "Read module", ky: "Сабакты окуу" },
+  "learn.read": { en: "Start walkthrough", ky: "Кадам-кадам баштоо" },
+  "learn.step": { en: "Step", ky: "Кадам" },
+  "learn.of": { en: "of", ky: "—" },
+  "learn.next": { en: "Next", ky: "Кийинки" },
+  "learn.back": { en: "Back", ky: "Артка" },
+  "learn.done": { en: "Done", ky: "Бүттү" },
+  "learn.stepsCount": { en: "steps", ky: "кадам" },
 
   "kit.title": { en: "Starter kit (basic outfit)", ky: "Башталгыч топтом" },
   "kit.sub": { en: "Minimum supplies to begin your first season.", ky: "Биринчи мезгилге керектүү минимум буюмдар." },
