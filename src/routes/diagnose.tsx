@@ -180,7 +180,8 @@ function DiagnosePage() {
                       : "border-border bg-secondary/40 text-foreground/80 hover:border-honey/60"
                   }`}
                 >
-                  {t(`diag.survey.season.${s}` as keyof typeof Dict)}
+                  {t(`diag.survey.season.${s}` as keyof typeof dict)}
+
                 </button>
               ))}
             </div>
