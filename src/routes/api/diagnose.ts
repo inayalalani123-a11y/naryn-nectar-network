@@ -26,7 +26,7 @@ Rules:
 - Use only honey-safe, residue-free remedies suitable for export-grade honey (no synthetic pyrethroids during flow).
 - Prefer organic acids (oxalic, formic), essential oils (thymol), mechanical (drone trapping, screened boards), and biotechnical methods.
 - If unsure, say so honestly with a low confidence and request a clearer photo in observations.
-- If language is Kyrgyz, translate observations/remedies/followUp to Kyrgyz too. Otherwise English.
+- Translate observations/remedies/followUp to the requested output language (Kyrgyz, Russian, or English). Keep "disease" in English and "diseaseKy" in Kyrgyz regardless.
 - Do not output anything except the JSON.`;
 
 function extractJson(text: string) {
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/api/diagnose")({
 
           const { image, lang, symptoms, notes, season } = (await request.json()) as {
             image: string;
-            lang: "en" | "ky";
+            lang: "en" | "ky" | "ru";
             symptoms?: string[];
             notes?: string;
             season?: string;
@@ -72,7 +72,7 @@ export const Route = createFileRoute("/api/diagnose")({
                   content: [
                     {
                       type: "text",
-                      text: `${PROMPT}\n\nOutput language preference: ${lang === "ky" ? "Kyrgyz" : "English"} (but keep both "disease" in English and "diseaseKy" in Kyrgyz).\n\n${seasonBlock}\n${symptomBlock}\n${notesBlock}\n\nWeigh the reported symptoms together with what you see in the photo. If symptoms strongly point to a disease that is not visible in the photo, mention it in observations.`,
+                      text: `${PROMPT}\n\nOutput language preference: ${lang === "ky" ? "Kyrgyz" : lang === "ru" ? "Russian" : "English"} (but keep both "disease" in English and "diseaseKy" in Kyrgyz).\n\n${seasonBlock}\n${symptomBlock}\n${notesBlock}\n\nWeigh the reported symptoms together with what you see in the photo. If symptoms strongly point to a disease that is not visible in the photo, mention it in observations.`,
                     },
                     { type: "image_url", image_url: { url: image } },
                   ],

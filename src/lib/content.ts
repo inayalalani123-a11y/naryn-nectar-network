@@ -29,7 +29,7 @@ import sl3 from "@/assets/learn/selling/3.jpg";
 import sl4 from "@/assets/learn/selling/4.jpg";
 import sl5 from "@/assets/learn/selling/5.jpg";
 
-type Bi = { en: string; ky: string };
+type Bi = { en: string; ky: string; ru?: string };
 
 export type ModuleStep = {
   title: Bi;
@@ -352,13 +352,15 @@ export const modules: Module[] = [
   },
 ];
 
-export const starterKit: { id: string; icon: string; name: Bi; price: string; note: Bi }[] = [
-  { id: "suit", icon: "👨‍🚀", name: { en: "Beekeeper suit with veil", ky: "Бет жабуусу менен костюм" }, price: "$45", note: { en: "Cotton, ventilated, full-zip", ky: "Пахта, желдетилген, толук сыдырмалуу" } },
-  { id: "gloves", icon: "🧤", name: { en: "Leather gloves", ky: "Булгаары кол кап" }, price: "$12", note: { en: "Soft goatskin with long cuff", ky: "Жумшак эчки териси, узун манжет" } },
-  { id: "smoker", icon: "💨", name: { en: "Stainless-steel smoker", ky: "Түтүн чыгаргыч" }, price: "$25", note: { en: "Bellows + heat shield", ky: "Үрлөгүч + жылуу калканы" } },
-  { id: "tool", icon: "🪛", name: { en: "Hive tool (J-hook)", ky: "Уюк аспабы (J-илмек)" }, price: "$8", note: { en: "Pry & frame lifter in one", ky: "Ачкыч жана алкак көтөргүч" } },
-  { id: "brush", icon: "🪶", name: { en: "Soft bee brush", ky: "Жумшак чөтөк" }, price: "$5", note: { en: "Horsehair, gentle on bees", ky: "Жылкы кылы, аарыга жумшак" } },
-  { id: "feeder", icon: "🥣", name: { en: "Frame feeder", ky: "Алкак тоюткуч" }, price: "$10", note: { en: "For spring sugar syrup", ky: "Жазгы шекер сироп үчүн" } },
+export const starterKit: { id: string; icon: string; name: Bi; note: Bi }[] = [
+  { id: "suit", icon: "👨‍🚀", name: { en: "Beekeeper suit with veil", ky: "Бет жабуусу менен костюм", ru: "Костюм пчеловода с маской" }, note: { en: "Cotton, ventilated, full-zip", ky: "Пахта, желдетилген, толук сыдырмалуу", ru: "Хлопок, вентилируемый, на молнии" } },
+  { id: "gloves", icon: "🧤", name: { en: "Leather gloves", ky: "Булгаары кол кап", ru: "Кожаные перчатки" }, note: { en: "Soft goatskin with long cuff", ky: "Жумшак эчки териси, узун манжет", ru: "Мягкая козья кожа, длинная манжета" } },
+  { id: "smoker", icon: "💨", name: { en: "Stainless-steel smoker", ky: "Түтүн чыгаргыч", ru: "Дымарь из нержавейки" }, note: { en: "Bellows + heat shield", ky: "Үрлөгүч + жылуу калканы", ru: "С мехами и теплозащитой" } },
+  { id: "tool", icon: "🪛", name: { en: "Hive tool (J-hook)", ky: "Уюк аспабы (J-илмек)", ru: "Стамеска (J-крюк)" }, note: { en: "Pry & frame lifter in one", ky: "Ачкыч жана алкак көтөргүч", ru: "Поддевает и поднимает рамки" } },
+  { id: "brush", icon: "🪶", name: { en: "Soft bee brush", ky: "Жумшак чөтөк", ru: "Мягкая щётка для пчёл" }, note: { en: "Horsehair, gentle on bees", ky: "Жылкы кылы, аарыга жумшак", ru: "Конский волос, бережно к пчёлам" } },
+  { id: "feeder", icon: "🥣", name: { en: "Frame feeder", ky: "Алкак тоюткуч", ru: "Рамочная кормушка" }, note: { en: "For spring sugar syrup", ky: "Жазгы шекер сироп үчүн", ru: "Для весеннего сахарного сиропа" } },
 ];
 
-export const tr = <T,>(obj: { en: T; ky: T }, lang: Lang): T => obj[lang];
+export const tr = <T,>(obj: { en: T; ky: T; ru?: T }, lang: Lang): T =>
+  (obj[lang] ?? obj.en) as T;
+

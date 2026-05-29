@@ -91,8 +91,8 @@ function DiagnosePage() {
       });
       if (!res.ok) {
         const e = await res.text();
-        if (res.status === 429) toast.error(lang === "ky" ? "Сурам өтө көп" : "Rate limit");
-        else if (res.status === 402) toast.error(lang === "ky" ? "AI кредити түгөндү" : "AI credits exhausted");
+        if (res.status === 429) toast.error(lang === "ky" ? "Сурам өтө көп" : lang === "ru" ? "Слишком много запросов" : "Rate limit");
+        else if (res.status === 402) toast.error(lang === "ky" ? "AI кредити түгөндү" : lang === "ru" ? "Кредиты ИИ исчерпаны" : "AI credits exhausted");
         else toast.error(e || "Error");
         return;
       }
@@ -210,7 +210,7 @@ function DiagnosePage() {
           </Button>
           {!preview && (
             <p className="text-xs text-muted-foreground">
-              {lang === "ky" ? "Талдоо үчүн адегенде сүрөт жүктө." : "Upload a photo above to enable analysis."}
+              {lang === "ky" ? "Талдоо үчүн адегенде сүрөт жүктө." : lang === "ru" ? "Сначала загрузите фото, чтобы включить анализ." : "Upload a photo above to enable analysis."}
             </p>
           )}
         </CardContent>
@@ -232,7 +232,7 @@ function DiagnosePage() {
             {result.observations.length > 0 && (
               <div>
                 <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                  {lang === "ky" ? "Байкоолор" : "Observations"}
+                  {lang === "ky" ? "Байкоолор" : lang === "ru" ? "Наблюдения" : "Observations"}
                 </h4>
                 <ul className="list-disc space-y-1 pl-5 text-foreground/90">
                   {result.observations.map((o, i) => <li key={i}>{o}</li>)}
@@ -254,7 +254,7 @@ function DiagnosePage() {
             </div>
             {result.followUp && (
               <p className="rounded-xl bg-forest/[0.04] p-4 text-sm text-foreground/80">
-                <strong>{lang === "ky" ? "Кийинки кадам: " : "Next step: "}</strong>{result.followUp}
+                <strong>{lang === "ky" ? "Кийинки кадам: " : lang === "ru" ? "Следующий шаг: " : "Next step: "}</strong>{result.followUp}
               </p>
             )}
             <p className="flex items-start gap-2 rounded-xl bg-honey/10 p-3 text-xs text-foreground/80">

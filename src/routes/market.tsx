@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, formatPrice } from "@/lib/i18n";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,12 +21,14 @@ export const Route = createFileRoute("/market")({
   component: MarketPage,
 });
 
+type LocalText = { en: string; ky: string; ru?: string };
 type Listing = {
   id: string;
   beekeeper: string;
   village: string;
-  variety: { en: string; ky: string };
-  description: { en: string; ky: string };
+  variety: LocalText;
+  description: LocalText;
+  /** Price in USD per kg as entered (e.g. "$22 / kg" or "22"). Converted to som on display for non-English. */
   price: string;
   emoji: string;
   email: string;
@@ -36,12 +38,12 @@ type Listing = {
 };
 
 const seedListings: Listing[] = [
-  { id: "1", beekeeper: "Aibek Toktosunov", village: "At-Bashy", emoji: "🌼", variety: { en: "Wildflower mountain honey", ky: "Тоо гүл балы" }, description: { en: "Raw, unfiltered honey from alpine meadows at 2,200 m.", ky: "2200 м бийиктиктеги тоо шалбаасынан чийки бал." }, price: "$22 / kg", email: "aibek@narynbee.kg", phone: "+996 700 123 456", whatsapp: "996700123456" },
-  { id: "2", beekeeper: "Gulnara Kasymova", village: "Naryn city", emoji: "🌿", variety: { en: "Esparcet (sainfoin) honey", ky: "Эспарцет балы" }, description: { en: "Light amber, mild floral aroma. EU food-grade certified.", ky: "Ачык кызгылт, жумшак гүл жыты. ЕБ сертификаты бар." }, price: "$28 / kg", email: "gulnara@narynbee.kg", phone: "+996 555 987 654", whatsapp: "996555987654" },
-  { id: "3", beekeeper: "Tilek Bekov", village: "Kochkor", emoji: "💜", variety: { en: "Thyme & herbal honey", ky: "Кыйшык чөп балы" }, description: { en: "Aromatic, dark, rich in polyphenols. Limited harvest.", ky: "Жыттуу, караңгы, полифенолдорго бай. Чектелген жыйым." }, price: "$32 / kg", email: "tilek@narynbee.kg", phone: "+996 770 222 333", whatsapp: "996770222333" },
-  { id: "4", beekeeper: "Nurzhan Asanov", village: "Jumgal", emoji: "🍯", variety: { en: "Clover honey", ky: "Беде балы" }, description: { en: "Classic sweet honey, perfect for everyday use.", ky: "Күнүмдүк колдонууга ылайык классикалык таттуу бал." }, price: "$18 / kg", email: "nurzhan@narynbee.kg", phone: "+996 552 111 222", whatsapp: "996552111222" },
-  { id: "5", beekeeper: "Cholpon Sultanova", village: "Ak-Talaa", emoji: "🌸", variety: { en: "Spring blossom honey", ky: "Жазгы гүл балы" }, description: { en: "First spring harvest, delicate and floral.", ky: "Биринчи жазгы жыйым, назик жана гүлдүү." }, price: "$24 / kg", email: "cholpon@narynbee.kg", phone: "+996 700 555 666", whatsapp: "996700555666" },
-  { id: "6", beekeeper: "Ermek Joldoshev", village: "Naryn city", emoji: "🌰", variety: { en: "Buckwheat honey", ky: "Карабуудай балы" }, description: { en: "Dark, robust, high in antioxidants. Bulk available.", ky: "Караңгы, бай даам, антиоксиданттарга бай. Көп санда бар." }, price: "$26 / kg", email: "ermek@narynbee.kg", phone: "+996 559 333 444", whatsapp: "996559333444" },
+  { id: "1", beekeeper: "Aibek Toktosunov", village: "At-Bashy", emoji: "🌼", variety: { en: "Wildflower mountain honey", ky: "Тоо гүл балы", ru: "Горный мёд разнотравье" }, description: { en: "Raw, unfiltered honey from alpine meadows at 2,200 m.", ky: "2200 м бийиктиктеги тоо шалбаасынан чийки бал.", ru: "Сырой нефильтрованный мёд с альпийских лугов на 2200 м." }, price: "$22 / kg", email: "aibek@narynbee.kg", phone: "+996 700 123 456", whatsapp: "996700123456" },
+  { id: "2", beekeeper: "Gulnara Kasymova", village: "Naryn city", emoji: "🌿", variety: { en: "Esparcet (sainfoin) honey", ky: "Эспарцет балы", ru: "Эспарцетовый мёд" }, description: { en: "Light amber, mild floral aroma. EU food-grade certified.", ky: "Ачык кызгылт, жумшак гүл жыты. ЕБ сертификаты бар.", ru: "Светло-янтарный, мягкий цветочный аромат. Сертификат ЕС." }, price: "$28 / kg", email: "gulnara@narynbee.kg", phone: "+996 555 987 654", whatsapp: "996555987654" },
+  { id: "3", beekeeper: "Tilek Bekov", village: "Kochkor", emoji: "💜", variety: { en: "Thyme & herbal honey", ky: "Кыйшык чөп балы", ru: "Тимьяновый травяной мёд" }, description: { en: "Aromatic, dark, rich in polyphenols. Limited harvest.", ky: "Жыттуу, караңгы, полифенолдорго бай. Чектелген жыйым.", ru: "Ароматный, тёмный, богат полифенолами. Ограниченный сбор." }, price: "$32 / kg", email: "tilek@narynbee.kg", phone: "+996 770 222 333", whatsapp: "996770222333" },
+  { id: "4", beekeeper: "Nurzhan Asanov", village: "Jumgal", emoji: "🍯", variety: { en: "Clover honey", ky: "Беде балы", ru: "Клеверный мёд" }, description: { en: "Classic sweet honey, perfect for everyday use.", ky: "Күнүмдүк колдонууга ылайык классикалык таттуу бал.", ru: "Классический сладкий мёд на каждый день." }, price: "$18 / kg", email: "nurzhan@narynbee.kg", phone: "+996 552 111 222", whatsapp: "996552111222" },
+  { id: "5", beekeeper: "Cholpon Sultanova", village: "Ak-Talaa", emoji: "🌸", variety: { en: "Spring blossom honey", ky: "Жазгы гүл балы", ru: "Весенний цветочный мёд" }, description: { en: "First spring harvest, delicate and floral.", ky: "Биринчи жазгы жыйым, назик жана гүлдүү.", ru: "Первый весенний сбор, нежный и цветочный." }, price: "$24 / kg", email: "cholpon@narynbee.kg", phone: "+996 700 555 666", whatsapp: "996700555666" },
+  { id: "6", beekeeper: "Ermek Joldoshev", village: "Naryn city", emoji: "🌰", variety: { en: "Buckwheat honey", ky: "Карабуудай балы", ru: "Гречишный мёд" }, description: { en: "Dark, robust, high in antioxidants. Bulk available.", ky: "Караңгы, бай даам, антиоксиданттарга бай. Көп санда бар.", ru: "Тёмный, насыщенный, богат антиоксидантами. Опт доступен." }, price: "$26 / kg", email: "ermek@narynbee.kg", phone: "+996 559 333 444", whatsapp: "996559333444" },
 ];
 
 const STORAGE_KEY = "naryn-bee-listings";
@@ -57,6 +59,8 @@ const listingSchema = z.object({
   phone: z.string().trim().min(4).max(40),
   whatsapp: z.string().trim().max(40).optional().or(z.literal("")),
 });
+
+const pickLang = (t: LocalText, lang: "en" | "ky" | "ru") => t[lang] ?? t.en;
 
 function MarketPage() {
   const { t, lang } = useI18n();
@@ -87,7 +91,8 @@ function MarketPage() {
       l.village.toLowerCase().includes(s) ||
       (l.brand?.toLowerCase().includes(s) ?? false) ||
       l.variety.en.toLowerCase().includes(s) ||
-      l.variety.ky.toLowerCase().includes(s)
+      l.variety.ky.toLowerCase().includes(s) ||
+      (l.variety.ru?.toLowerCase().includes(s) ?? false)
     );
   }, [q, all]);
 
@@ -119,13 +124,13 @@ function MarketPage() {
             <div className="flex h-32 items-center justify-center bg-gradient-to-br from-honey/30 to-honey/10 text-6xl">{l.emoji}</div>
             <CardContent className="p-5">
               {l.brand && <div className="text-xs font-semibold uppercase tracking-wide text-honey">{l.brand}</div>}
-              <h3 className="font-display text-lg font-bold text-forest">{lang === "ky" ? l.variety.ky : l.variety.en}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{lang === "ky" ? l.description.ky : l.description.en}</p>
+              <h3 className="font-display text-lg font-bold text-forest">{pickLang(l.variety, lang)}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{pickLang(l.description, lang)}</p>
               <div className="mt-3 flex items-center gap-2 text-sm text-foreground/80">
                 <MapPin className="h-4 w-4 text-honey" /> {l.beekeeper} · {l.village}
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <span className="rounded-full bg-honey/20 px-3 py-1 text-sm font-bold text-forest">{l.price}</span>
+                <span className="rounded-full bg-honey/20 px-3 py-1 text-sm font-bold text-forest">{formatPrice(l.price, lang)}</span>
                 <Button size="sm" className="bg-forest text-primary-foreground hover:bg-forest/90" onClick={() => setActive(l)}>
                   {t("market.contact")}
                 </Button>
@@ -207,14 +212,19 @@ function ListingFormDialog({
       return;
     }
     const d = parsed.data;
+    // Normalize price: if user typed a plain number, store as "$N / kg".
+    const priceTrim = d.price.trim();
+    const normalizedPrice = /^\d+(?:[.,]\d+)?$/.test(priceTrim)
+      ? `$${priceTrim} / kg`
+      : priceTrim;
     onSubmit({
       id: `u-${Date.now()}`,
       beekeeper: d.beekeeper,
       brand: d.brand,
       village: d.village,
-      variety: { en: d.variety, ky: d.variety },
-      description: { en: d.description, ky: d.description },
-      price: d.price,
+      variety: { en: d.variety, ky: d.variety, ru: d.variety },
+      description: { en: d.description, ky: d.description, ru: d.description },
+      price: normalizedPrice,
       emoji,
       email: d.email,
       phone: d.phone,
@@ -236,7 +246,7 @@ function ListingFormDialog({
             <Field label={t("market.f.brand")}><Input value={form.brand} onChange={set("brand")} maxLength={80} required /></Field>
             <Field label={t("market.f.village")}><Input value={form.village} onChange={set("village")} maxLength={60} required /></Field>
             <Field label={t("market.f.variety")}><Input value={form.variety} onChange={set("variety")} maxLength={80} required /></Field>
-            <Field label={t("market.f.price")}><Input value={form.price} onChange={set("price")} placeholder="$25 / kg" maxLength={40} required /></Field>
+            <Field label={t("market.f.price")}><Input value={form.price} onChange={set("price")} placeholder="25" maxLength={40} required /></Field>
             <Field label={t("market.f.email")}><Input type="email" value={form.email} onChange={set("email")} maxLength={120} required /></Field>
             <Field label={t("market.f.phone")}><Input value={form.phone} onChange={set("phone")} placeholder="+996 …" maxLength={40} required /></Field>
             <Field label={t("market.f.whatsapp")}><Input value={form.whatsapp} onChange={set("whatsapp")} placeholder="996700123456" maxLength={40} /></Field>

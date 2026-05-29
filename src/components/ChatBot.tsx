@@ -19,10 +19,12 @@ export function ChatBot() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
+  const localeFor = (l: typeof lang) => (l === "ky" ? "ky-KG" : l === "ru" ? "ru-RU" : "en-US");
+
   const speak = (text: string) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = lang === "ky" ? "ky-KG" : "en-US";
+    u.lang = localeFor(lang);
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);
   };
@@ -30,12 +32,12 @@ export function ChatBot() {
   const toggleMic = () => {
     const SR = (typeof window !== "undefined") && ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
     if (!SR) {
-      toast.error(lang === "ky" ? "Браузер үн таанууну колдобойт" : "Voice not supported in this browser");
+      toast.error(lang === "ky" ? "Браузер үн таанууну колдобойт" : lang === "ru" ? "Браузер не поддерживает распознавание речи" : "Voice not supported in this browser");
       return;
     }
     if (listening) { recRef.current?.stop(); return; }
     const rec = new SR();
-    rec.lang = lang === "ky" ? "ky-KG" : "en-US";
+    rec.lang = localeFor(lang);
     rec.interimResults = false;
     rec.onresult = (e: any) => setInput(e.results[0][0].transcript);
     rec.onend = () => setListening(false);
@@ -60,8 +62,8 @@ export function ChatBot() {
       });
       if (!res.ok) {
         const errText = await res.text();
-        if (res.status === 429) toast.error(lang === "ky" ? "Сурам өтө көп, кийинчерээк аракет кыл" : "Rate limit, please wait a moment");
-        else if (res.status === 402) toast.error(lang === "ky" ? "AI кредити түгөндү" : "AI credits exhausted");
+        if (res.status === 429) toast.error(lang === "ky" ? "Сурам өтө көп, кийинчерээк аракет кыл" : lang === "ru" ? "Слишком много запросов, попробуйте позже" : "Rate limit, please wait a moment");
+        else if (res.status === 402) toast.error(lang === "ky" ? "AI кредити түгөндү" : lang === "ru" ? "Кредиты ИИ исчерпаны" : "AI credits exhausted");
         else toast.error(errText || "Error");
         setMessages(next);
         return;
