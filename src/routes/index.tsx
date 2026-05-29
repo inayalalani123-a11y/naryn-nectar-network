@@ -106,10 +106,7 @@ function LearnPage() {
               <div key={k.id} className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 transition hover:border-honey">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-secondary text-2xl">{k.icon}</div>
                 <div className="flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-semibold text-forest">{tr(k.name, lang)}</h3>
-                    <span className="rounded-full bg-honey/20 px-2 py-0.5 text-xs font-bold text-forest">{k.price}</span>
-                  </div>
+                  <h3 className="font-semibold text-forest">{tr(k.name, lang)}</h3>
                   <p className="mt-1 text-sm text-muted-foreground">{tr(k.note, lang)}</p>
                 </div>
               </div>
