@@ -257,7 +257,6 @@ function DiagnosePage() {
                 <strong>{lang === "ky" ? "Кийинки кадам: " : lang === "ru" ? "Следующий шаг: " : "Next step: "}</strong>{result.followUp}
               </p>
             )}
-            )}
             <p className="flex items-start gap-2 rounded-xl bg-honey/10 p-3 text-xs text-foreground/80">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-honey" /> {t("diag.disclaimer")}
             </p>
