@@ -92,8 +92,6 @@ export const dict: Dict = {
   "market.f.phone": { en: "Phone", ky: "Телефон" },
   "market.f.whatsapp": { en: "WhatsApp (optional)", ky: "WhatsApp (милдеттүү эмес)" },
   "market.f.emoji": { en: "Pick an icon", ky: "Белги тандоо" },
-  "market.price": { en: "Price", ky: "Баасы" },
-  "market.search": { en: "Search honey or village…", ky: "Бал же айыл боюнча издөө…" },
 
   "common.back": { en: "Back", ky: "Артка" },
 };
