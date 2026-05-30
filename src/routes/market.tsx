@@ -21,7 +21,7 @@ export const Route = createFileRoute("/market")({
   component: MarketPage,
 });
 
-type LocalText = { en: string; ky: string; ru?: string };
+type LocalText = { en: string; ky: string };
 type Listing = {
   id: string;
   beekeeper: string;
@@ -38,12 +38,12 @@ type Listing = {
 };
 
 const seedListings: Listing[] = [
-  { id: "1", beekeeper: "Aibek Toktosunov", village: "At-Bashy", emoji: "🌼", variety: { en: "Wildflower mountain honey", ky: "Тоо гүл балы", ru: "Горный мёд разнотравье" }, description: { en: "Raw, unfiltered honey from alpine meadows at 2,200 m.", ky: "2200 м бийиктиктеги тоо шалбаасынан чийки бал.", ru: "Сырой нефильтрованный мёд с альпийских лугов на 2200 м." }, price: "$22 / kg", email: "aibek@narynbee.kg", phone: "+996 700 123 456", whatsapp: "996700123456" },
-  { id: "2", beekeeper: "Gulnara Kasymova", village: "Naryn city", emoji: "🌿", variety: { en: "Esparcet (sainfoin) honey", ky: "Эспарцет балы", ru: "Эспарцетовый мёд" }, description: { en: "Light amber, mild floral aroma. EU food-grade certified.", ky: "Ачык кызгылт, жумшак гүл жыты. ЕБ сертификаты бар.", ru: "Светло-янтарный, мягкий цветочный аромат. Сертификат ЕС." }, price: "$28 / kg", email: "gulnara@narynbee.kg", phone: "+996 555 987 654", whatsapp: "996555987654" },
-  { id: "3", beekeeper: "Tilek Bekov", village: "Kochkor", emoji: "💜", variety: { en: "Thyme & herbal honey", ky: "Кыйшык чөп балы", ru: "Тимьяновый травяной мёд" }, description: { en: "Aromatic, dark, rich in polyphenols. Limited harvest.", ky: "Жыттуу, караңгы, полифенолдорго бай. Чектелген жыйым.", ru: "Ароматный, тёмный, богат полифенолами. Ограниченный сбор." }, price: "$32 / kg", email: "tilek@narynbee.kg", phone: "+996 770 222 333", whatsapp: "996770222333" },
-  { id: "4", beekeeper: "Nurzhan Asanov", village: "Jumgal", emoji: "🍯", variety: { en: "Clover honey", ky: "Беде балы", ru: "Клеверный мёд" }, description: { en: "Classic sweet honey, perfect for everyday use.", ky: "Күнүмдүк колдонууга ылайык классикалык таттуу бал.", ru: "Классический сладкий мёд на каждый день." }, price: "$18 / kg", email: "nurzhan@narynbee.kg", phone: "+996 552 111 222", whatsapp: "996552111222" },
-  { id: "5", beekeeper: "Cholpon Sultanova", village: "Ak-Talaa", emoji: "🌸", variety: { en: "Spring blossom honey", ky: "Жазгы гүл балы", ru: "Весенний цветочный мёд" }, description: { en: "First spring harvest, delicate and floral.", ky: "Биринчи жазгы жыйым, назик жана гүлдүү.", ru: "Первый весенний сбор, нежный и цветочный." }, price: "$24 / kg", email: "cholpon@narynbee.kg", phone: "+996 700 555 666", whatsapp: "996700555666" },
-  { id: "6", beekeeper: "Ermek Joldoshev", village: "Naryn city", emoji: "🌰", variety: { en: "Buckwheat honey", ky: "Карабуудай балы", ru: "Гречишный мёд" }, description: { en: "Dark, robust, high in antioxidants. Bulk available.", ky: "Караңгы, бай даам, антиоксиданттарга бай. Көп санда бар.", ru: "Тёмный, насыщенный, богат антиоксидантами. Опт доступен." }, price: "$26 / kg", email: "ermek@narynbee.kg", phone: "+996 559 333 444", whatsapp: "996559333444" },
+  { id: "1", beekeeper: "Aibek Toktosunov", village: "At-Bashy", emoji: "🌼", variety: { en: "Wildflower mountain honey", ky: "Тоо гүл балы" }, description: { en: "Raw, unfiltered honey from alpine meadows at 2,200 m.", ky: "2200 м бийиктиктеги тоо шалбаасынан чийки бал." }, price: "$22 / kg", email: "aibek@narynbee.kg", phone: "+996 700 123 456", whatsapp: "996700123456" },
+  { id: "2", beekeeper: "Gulnara Kasymova", village: "Naryn city", emoji: "🌿", variety: { en: "Esparcet (sainfoin) honey", ky: "Эспарцет балы" }, description: { en: "Light amber, mild floral aroma. EU food-grade certified.", ky: "Ачык кызгылт, жумшак гүл жыты. ЕБ сертификаты бар." }, price: "$28 / kg", email: "gulnara@narynbee.kg", phone: "+996 555 987 654", whatsapp: "996555987654" },
+  { id: "3", beekeeper: "Tilek Bekov", village: "Kochkor", emoji: "💜", variety: { en: "Thyme & herbal honey", ky: "Кыйшык чөп балы" }, description: { en: "Aromatic, dark, rich in polyphenols. Limited harvest.", ky: "Жыттуу, караңгы, полифенолдорго бай. Чектелген жыйым." }, price: "$32 / kg", email: "tilek@narynbee.kg", phone: "+996 770 222 333", whatsapp: "996770222333" },
+  { id: "4", beekeeper: "Nurzhan Asanov", village: "Jumgal", emoji: "🍯", variety: { en: "Clover honey", ky: "Беде балы" }, description: { en: "Classic sweet honey, perfect for everyday use.", ky: "Күнүмдүк колдонууга ылайык классикалык таттуу бал." }, price: "$18 / kg", email: "nurzhan@narynbee.kg", phone: "+996 552 111 222", whatsapp: "996552111222" },
+  { id: "5", beekeeper: "Cholpon Sultanova", village: "Ak-Talaa", emoji: "🌸", variety: { en: "Spring blossom honey", ky: "Жазгы гүл балы" }, description: { en: "First spring harvest, delicate and floral.", ky: "Биринчи жазгы жыйым, назик жана гүлдүү." }, price: "$24 / kg", email: "cholpon@narynbee.kg", phone: "+996 700 555 666", whatsapp: "996700555666" },
+  { id: "6", beekeeper: "Ermek Joldoshev", village: "Naryn city", emoji: "🌰", variety: { en: "Buckwheat honey", ky: "Карабуудай балы" }, description: { en: "Dark, robust, high in antioxidants. Bulk available.", ky: "Караңгы, бай даам, антиоксиданттарга бай. Көп санда бар." }, price: "$26 / kg", email: "ermek@narynbee.kg", phone: "+996 559 333 444", whatsapp: "996559333444" },
 ];
 
 const STORAGE_KEY = "naryn-bee-listings";
@@ -60,7 +60,7 @@ const listingSchema = z.object({
   whatsapp: z.string().trim().max(40).optional().or(z.literal("")),
 });
 
-const pickLang = (t: LocalText, lang: "en" | "ky" | "ru") => t[lang] ?? t.en;
+const pickLang = (t: LocalText, lang: "en" | "ky") => t[lang] ?? t.en;
 
 function MarketPage() {
   const { t, lang } = useI18n();
@@ -91,8 +91,7 @@ function MarketPage() {
       l.village.toLowerCase().includes(s) ||
       (l.brand?.toLowerCase().includes(s) ?? false) ||
       l.variety.en.toLowerCase().includes(s) ||
-      l.variety.ky.toLowerCase().includes(s) ||
-      (l.variety.ru?.toLowerCase().includes(s) ?? false)
+      l.variety.ky.toLowerCase().includes(s)
     );
   }, [q, all]);
 
@@ -222,8 +221,8 @@ function ListingFormDialog({
       beekeeper: d.beekeeper,
       brand: d.brand,
       village: d.village,
-      variety: { en: d.variety, ky: d.variety, ru: d.variety },
-      description: { en: d.description, ky: d.description, ru: d.description },
+      variety: { en: d.variety, ky: d.variety },
+      description: { en: d.description, ky: d.description },
       price: normalizedPrice,
       emoji,
       email: d.email,

@@ -5,7 +5,6 @@ import { Hexagon } from "lucide-react";
 const LANGS: { code: Lang; label: string }[] = [
   { code: "en", label: "EN" },
   { code: "ky", label: "КЫ" },
-  { code: "ru", label: "РУ" },
 ];
 
 export function SiteHeader() {

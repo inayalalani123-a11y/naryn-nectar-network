@@ -29,7 +29,7 @@ import sl3 from "@/assets/learn/selling/3.jpg";
 import sl4 from "@/assets/learn/selling/4.jpg";
 import sl5 from "@/assets/learn/selling/5.jpg";
 
-type Bi = { en: string; ky: string; ru: string };
+type Bi = { en: string; ky: string };
 
 export type ModuleStep = {
   title: Bi;
@@ -52,132 +52,121 @@ export const modules: Module[] = [
   {
     id: "getting-started",
     icon: "🐝",
-    title: { en: "Getting started in the mountains", ky: "Тоодо аарычылыкты баштоо", ru: "Начало работы в горах" },
-    summary: { en: "Site selection, altitude, wind protection.", ky: "Жер тандоо, бийиктик, шамалдан коргоо.", ru: "Выбор участка, высота, защита от ветра." },
+    title: { en: "Getting started in the mountains", ky: "Тоодо аарычылыкты баштоо" },
+    summary: { en: "Site selection, altitude, wind protection.", ky: "Жер тандоо, бийиктик, шамалдан коргоо." },
     body: {
       en: "Choose a sheltered south-facing slope between 1,800–2,400 m.",
       ky: "1800–2400 м бийиктикте, түштүккө караган беттен жер танда.",
-      ru: "Выберите укрытый склон на южную сторону на высоте 1 800–2 400 м.",
     },
     steps: [
       {
-        title: { en: "1. Survey the site", ky: "1. Жерди карап чык", ru: "1. Осмотрите участок" },
+        title: { en: "1. Survey the site", ky: "1. Жерди карап чык" },
         body: {
           en: "Walk the land in late morning. Look for a gentle south-facing slope, sheltered from north winds, with native flowering plants nearby (esparcet, clover, juniper). Avoid frost pockets at the valley bottom.",
           ky: "Эртең мененки убакта жерди айланып чык. Түштүккө караган, түндүк шамалынан корголгон, жанында чөп-чарбасы (эспарцет, беде, арча) бар жумшак бетти изде. Өрөөндүн түбүндөгү аяздуу жерлерден алыс бол.",
-          ru: "Осматривайте землю поздним утром. Ищите пологий склон на юг, защищённый от северного ветра, рядом с местными цветущими растениями (эспарцет, клевер, можжевельник). Избегайте замерзших низин в долине.",
         },
         image: gs1,
-        imageAlt: { en: "Alpine slope in Naryn", ky: "Нарындын тоо беттери", ru: "Альпийский склон в Нарыне" },
-        caption: { en: "Tip: morning sun warms the cluster fastest.", ky: "Кеңеш: эртең мененки күн уюкту тез жылытат.", ru: "Совет: утреннее солнце быстрее прогревает клуб." },
+        imageAlt: { en: "Alpine slope in Naryn", ky: "Нарындын тоо беттери" },
+        caption: { en: "Tip: morning sun warms the cluster fastest.", ky: "Кеңеш: эртең мененки күн уюкту тез жылытат." },
       },
       {
-        title: { en: "2. Pick the altitude", ky: "2. Бийиктикти танда", ru: "2. Выберите высоту" },
+        title: { en: "2. Pick the altitude", ky: "2. Бийиктикти танда" },
         body: {
           en: "Aim for 1,800–2,400 m. Below 1,800 m summers can be too dry; above 2,400 m the season is too short. Mark the spot where the sun first hits each morning — that is where the hive entrance should face.",
           ky: "1800–2400 м тандап ал. 1800 м төмөн жайы кургак, 2400 м жогору мезгил кыска. Күн эртең менен биринчи тийген жерди белгиле — уюктун оозу ошол жакка караш керек.",
-          ru: "Стремитесь к 1 800–2 400 м. Ниже 1 800 м лето может быть слишком сухим; выше 2 400 м сезон слишком короткий. Отметьте место, куда солнце сначала попадает утром — туда должен быть направлен леток улья.",
         },
         image: gs2,
-        imageAlt: { en: "Altitude band diagram", ky: "Бийиктик схемасы", ru: "Схема высотного пояса" },
+        imageAlt: { en: "Altitude band diagram", ky: "Бийиктик схемасы" },
       },
       {
-        title: { en: "3. Build the windbreak", ky: "3. Шамал тосуу", ru: "3. Постройте защиту от ветра" },
+        title: { en: "3. Build the windbreak", ky: "3. Шамал тосуу" },
         body: {
           en: "Behind the hives, plant juniper or willow, or build a low dry-stone wall (1–1.5 m). This breaks cold winds and prevents the cluster from losing heat in winter.",
           ky: "Уюктардын артына арча же тал тиг, же 1–1,5 м бийик таш дубал сал. Бул муздак шамалды бөгөйт жана кышында уюктун жылуулугун сактайт.",
-          ru: "За ульями посадите можжевельник или иву, или постройте низкую сухую каменную стену (1–1,5 м). Это ломает холодный ветер и не даёт клубу терять тепло зимой.",
         },
         image: gs3,
-        imageAlt: { en: "Stone-wall windbreak with juniper", ky: "Арча менен таш дубал", ru: "Каменная стена-барьер с можжевельником" },
+        imageAlt: { en: "Stone-wall windbreak with juniper", ky: "Арча менен таш дубал" },
       },
       {
-        title: { en: "4. Water & spacing", ky: "4. Суу жана аралык", ru: "4. Вода и расстояние" },
+        title: { en: "4. Water & spacing", ky: "4. Суу жана аралык" },
         body: {
           en: "Place hives 3–4 m apart on wooden stands 30 cm off the ground. Ensure a clean water source (stream, trough with floating wood) is within 100 m so bees don't waste energy searching.",
           ky: "Уюктарды жыгач такта менен жерден 30 см бийик, бири-биринен 3–4 м аралыкта кой. 100 м ичинде таза суу (булак, калкып турган жыгачы бар идиш) болсун — аарылар күчүн коротпойт.",
-          ru: "Разместите ульи на расстоянии 3–4 м на деревянных подставках на высоте 30 см от земли. Убедитесь, что чистый источник воды (ручей, поилка с плавающим куском дерева) находится в пределах 100 м, чтобы пчёлы не тратили энергию на поиск.",
         },
         image: gs4,
-        imageAlt: { en: "Apiary layout from above", ky: "Уя жайгашуусу", ru: "Планировка пасеки сверху" },
+        imageAlt: { en: "Apiary layout from above", ky: "Уя жайгашуусу" },
       },
     ],
   },
   {
     id: "hive-setup",
     icon: "📦",
-    title: { en: "Hive setup & equipment", ky: "Уюкту жабдуу", ru: "Оборудование улья" },
-    summary: { en: "Dadant vs Langstroth, frames, foundation.", ky: "Дадан же Лангстрот, алкактар, негиз.", ru: "Дадан vs Лангстрот, рамки, основа." },
-    body: { en: "Dadant hives suit mountain climates well.", ky: "Дадан уюгу тоо аба ырайына ылайык.", ru: "Улья Дадан хорошо подходят для горного климата." },
+    title: { en: "Hive setup & equipment", ky: "Уюкту жабдуу" },
+    summary: { en: "Dadant vs Langstroth, frames, foundation.", ky: "Дадан же Лангстрот, алкактар, негиз." },
+    body: { en: "Dadant hives suit mountain climates well.", ky: "Дадан уюгу тоо аба ырайына ылайык." },
     steps: [
       {
-        title: { en: "1. Choose a Dadant hive", ky: "1. Дадан уюгун танда", ru: "1. Выберите улей Дадан" },
+        title: { en: "1. Choose a Dadant hive", ky: "1. Дадан уюгун танда" },
         body: {
           en: "For Naryn, Dadant hives are best — thick wooden walls (35 mm+) hold heat in cold nights. Start with one brood box plus one super, each holding 10 frames.",
           ky: "Нарын үчүн Дадан уюгу эң ылайыктуу — калың (35 мм+) жыгач дубалы суук түндөрдө жылуулукту сактайт. Бир негизги корпус жана бир магазин менен башта, ар бирине 10 алкак.",
-          ru: "Для Нарына лучше всего подходят улья Дадан — толстые деревянные стены (35 мм+) сохраняют тепло в холодные ночи. Начните с одного маточника и одного медовика, каждый на 10 рамок.",
         },
         image: hs1,
-        imageAlt: { en: "Traditional Dadant hive", ky: "Дадан уюгу", ru: "Традиционный улей Дадан" },
+        imageAlt: { en: "Traditional Dadant hive", ky: "Дадан уюгу" },
       },
       {
-        title: { en: "2. Frames & foundation", ky: "2. Алкак жана негиз", ru: "2. Рамки и основа" },
+        title: { en: "2. Frames & foundation", ky: "2. Алкак жана негиз" },
         body: {
           en: "Use wax foundation pressed from your own cappings or from a trusted local supplier. Imported foundation can carry chemical residues that hurt export quality.",
           ky: "Өзүңдүн момуңдан же ишенимдүү жергиликтүү сатуучудан алынган негизди колдон. Чет өлкөнүн негизинде химиялык калдыктар болот, экспортко жарабайт.",
-          ru: "Используйте вощину, отжатую из собственных крышечек или от надёжного местного поставщика. Импортная основа может содержать химические остатки, которые снижают качество экспорта.",
         },
         image: hs2,
-        imageAlt: { en: "Wax foundation on a frame", ky: "Алкактагы момдуу негиз", ru: "Вощина на рамке" },
+        imageAlt: { en: "Wax foundation on a frame", ky: "Алкактагы момдуу негиз" },
       },
       {
-        title: { en: "3. Stand & placement", ky: "3. Такта жана жайгашуу", ru: "3. Подставка и размещение" },
+        title: { en: "3. Stand & placement", ky: "3. Такта жана жайгашуу" },
         body: {
           en: "Set each hive on a sturdy wooden stand 30 cm off the ground. Tilt the hive 1–2° forward so rainwater drains out. Entrance faces morning sun (east / south-east).",
           ky: "Ар бир уюкту бекем жыгач тактага 30 см бийикте кой. Жамгыр суу агып кетсин үчүн алдыга 1–2° кыйшайт. Оозу эртең мененки күнгө (чыгышка / түштүк-чыгышка) карасын.",
-          ru: "Поставьте каждый улей на прочную деревянную подставку на высоте 30 см. Наклоните улей на 1–2° вперёд, чтобы вода стекала. Леток должен смотреть на утреннее солнце (восток/юго-восток).",
         },
         image: hs3,
-        imageAlt: { en: "Hive on a wooden stand diagram", ky: "Тактадагы уюк схемасы", ru: "Схема улья на деревянной подставке" },
+        imageAlt: { en: "Hive on a wooden stand diagram", ky: "Тактадагы уюк схемасы" },
       },
       {
-        title: { en: "4. Insulate for winter", ky: "4. Кышка жылыт", ru: "4. Утеплите на зиму" },
+        title: { en: "4. Insulate for winter", ky: "4. Кышка жылыт" },
         body: {
           en: "Add a 3–5 cm felt or wool pad above the inner cover. This prevents condensation dripping back on the cluster when night temps drop below −25 °C.",
           ky: "Ички капкактын үстүнө 3–5 см кийиз же жүн төшө. Түнү −25 °C түшкөндө бул нымдын аарыларга тамчылашынан сактайт.",
-          ru: "Добавьте 3–5 см войлока или шерстяной прокладки над внутренней крышкой. Это предотвращает капание конденсата обратно на клуб, когда ночная температура опускается ниже −25 °C.",
         },
         image: hs4,
-        imageAlt: { en: "Winter insulation cutaway", ky: "Кышкы жылытуу", ru: "Разрез утеплённого улья" },
+        imageAlt: { en: "Winter insulation cutaway", ky: "Кышкы жылытуу" },
       },
     ],
   },
   {
     id: "seasons",
     icon: "🌸",
-    title: { en: "Seasonal calendar for Naryn", ky: "Нарындын мезгилдик календары", ru: "Сезонный календарь для Нарына" },
-    summary: { en: "What to do in each month, from May to October.", ky: "Май-октябрда айлык иштер.", ru: "Что делать каждый месяц с мая по октябрь." },
-    body: { en: "Late April–May: spring inspection.", ky: "Апрель-май: жазгы текшерүү.", ru: "Конец апреля–мая: весенний осмотр." },
+    title: { en: "Seasonal calendar for Naryn", ky: "Нарындын мезгилдик календары" },
+    summary: { en: "What to do in each month, from May to October.", ky: "Май-октябрда айлык иштер." },
+    body: { en: "Late April–May: spring inspection.", ky: "Апрель-май: жазгы текшерүү." },
     steps: [
       {
-        title: { en: "Spring (Apr–May)", ky: "Жаз (апрель–май)", ru: "Весна (апрель–май)" },
+        title: { en: "Spring (Apr–May)", ky: "Жаз (апрель–май)" },
         body: {
           en: "First warm day above 12 °C: open the hive briefly. Check the queen, brood pattern, and stores. If less than 4 kg of honey remains, feed 1:1 sugar syrup.",
           ky: "12 °C ашкан биринчи жылуу күнү уюкту кыска ач. Энени, курттун катмарын, тоютту текшер. 4 кг балдан аз калса, 1:1 шекер сироп бер.",
-          ru: "В первый тёплый день выше 12 °C кратко откройте улей. Проверьте матку, расплод и запасы. Если осталось меньше 4 кг мёда, подкормите сиропом 1:1.",
         },
         image: se1,
-        imageAlt: { en: "Spring inspection", ky: "Жазгы текшерүү", ru: "Весенний осмотр" },
+        imageAlt: { en: "Spring inspection", ky: "Жазгы текшерүү" },
       },
       {
-        title: { en: "Early summer (Jun)", ky: "Эрте жай (июнь)", ru: "Ранняя жара (июнь)" },
+        title: { en: "Early summer (Jun)", ky: "Эрте жай (июнь)" },
         body: {
           en: "Alpine flow begins. Add the super before the brood box is full to prevent swarming. Watch for queen cells every 7–9 days.",
           ky: "Тоо чөбү башталат. Курт уячасы толгончо магазинди кой — көчүүнүн алдын алат. 7–9 күн сайын эне уячаларын карап тур.",
-          ru: "Начинается альпийский медосбор. Добавьте надставку перед заполнением гнезда, чтобы предотвратить роение. Проверяйте маточники каждые 7–9 дней.",
         },
         image: se2,
-        imageAlt: { en: "Alpine pasture in bloom", ky: "Гүлдөгөн тоо жайыты", ru: "Альпийский пастбищный луг в цвету" },
+        imageAlt: { en: "Alpine pasture in bloom", ky: "Гүлдөгөн тоо жайыты" },
       },
       {
         title: { en: "Main flow (Jul–Aug)", ky: "Башкы агым (июль–август)" },
@@ -364,14 +353,14 @@ export const modules: Module[] = [
 ];
 
 export const starterKit: { id: string; icon: string; name: Bi; note: Bi }[] = [
-  { id: "suit", icon: "👨‍🚀", name: { en: "Beekeeper suit with veil", ky: "Бет жабуусу менен костюм", ru: "Костюм пчеловода с маской" }, note: { en: "Cotton, ventilated, full-zip", ky: "Пахта, желдетилген, толук сыдырмалуу", ru: "Хлопок, вентилируемый, на молнии" } },
-  { id: "gloves", icon: "🧤", name: { en: "Leather gloves", ky: "Булгаары кол кап", ru: "Кожаные перчатки" }, note: { en: "Soft goatskin with long cuff", ky: "Жумшак эчки териси, узун манжет", ru: "Мягкая козья кожа, длинная манжета" } },
-  { id: "smoker", icon: "💨", name: { en: "Stainless-steel smoker", ky: "Түтүн чыгаргыч", ru: "Дымарь из нержавейки" }, note: { en: "Bellows + heat shield", ky: "Үрлөгүч + жылуу калканы", ru: "С мехами и теплозащитой" } },
-  { id: "tool", icon: "🪛", name: { en: "Hive tool (J-hook)", ky: "Уюк аспабы (J-илмек)", ru: "Стамеска (J-крюк)" }, note: { en: "Pry & frame lifter in one", ky: "Ачкыч жана алкак көтөргүч", ru: "Поддевает и поднимает рамки" } },
-  { id: "brush", icon: "🪶", name: { en: "Soft bee brush", ky: "Жумшак чөтөк", ru: "Мягкая щётка для пчёл" }, note: { en: "Horsehair, gentle on bees", ky: "Жылкы кылы, аарыга жумшак", ru: "Конский волос, бережно к пчёлам" } },
-  { id: "feeder", icon: "🥣", name: { en: "Frame feeder", ky: "Алкак тоюткуч", ru: "Рамочная кормушка" }, note: { en: "For spring sugar syrup", ky: "Жазгы шекер сироп үчүн", ru: "Для весеннего сахарного сиропа" } },
+  { id: "suit", icon: "👨‍🚀", name: { en: "Beekeeper suit with veil", ky: "Бет жабуусу менен костюм" }, note: { en: "Cotton, ventilated, full-zip", ky: "Пахта, желдетилген, толук сыдырмалуу" } },
+  { id: "gloves", icon: "🧤", name: { en: "Leather gloves", ky: "Булгаары кол кап" }, note: { en: "Soft goatskin with long cuff", ky: "Жумшак эчки териси, узун манжет" } },
+  { id: "smoker", icon: "💨", name: { en: "Stainless-steel smoker", ky: "Түтүн чыгаргыч" }, note: { en: "Bellows + heat shield", ky: "Үрлөгүч + жылуу калканы" } },
+  { id: "tool", icon: "🪛", name: { en: "Hive tool (J-hook)", ky: "Уюк аспабы (J-илмек)" }, note: { en: "Pry & frame lifter in one", ky: "Ачкыч жана алкак көтөргүч" } },
+  { id: "brush", icon: "🪶", name: { en: "Soft bee brush", ky: "Жумшак чөтөк" }, note: { en: "Horsehair, gentle on bees", ky: "Жылкы кылы, аарыга жумшак" } },
+  { id: "feeder", icon: "🥣", name: { en: "Frame feeder", ky: "Алкак тоюткуч" }, note: { en: "For spring sugar syrup", ky: "Жазгы шекер сироп үчүн" } },
 ];
 
-export const tr = <T,>(obj: { en: T; ky: T; ru?: T }, lang: Lang): T =>
+export const tr = <T,>(obj: { en: T; ky: T }, lang: Lang): T =>
   (obj[lang] ?? obj.en) as T;
 

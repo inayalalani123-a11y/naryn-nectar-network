@@ -11,23 +11,17 @@ const SYSTEM_KY = `Сен "Нарын Аары Жардамчысысың" — �
 Эгер дары бал сапатын төмөндөтсө, кеп. Жоопторуң кыска (180 сөздөн аз), эгер колдонуучу майда-чүйдөсүн сурабаса.
 Дайыма таза кыргыз тилинде жооп бер.`;
 
-const SYSTEM_RU = `Ты "Помощник пчеловодов Нарына" — эксперт для пчеловодов Нарынской области (Кыргызстан, высокогорье Тянь-Шаня, холодные зимы, короткое лето, альпийские пастбища).
-Аудитория: сельские семьи, в том числе начинающие. Будь тёплым, конкретным и практичным.
-Всегда предпочитай натуральные и доступные на месте решения. Давай числовые ориентиры (кг, °C, м, дни).
-Если средство может повлиять на экспортное качество мёда — скажи об этом. Ответы короткие (до 180 слов), если не просят подробнее.
-Всегда отвечай на чистом русском языке.`;
-
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
-          const { messages, lang } = (await request.json()) as { messages: { role: string; content: string }[]; lang: "en" | "ky" | "ru" };
+          const { messages, lang } = (await request.json()) as { messages: { role: string; content: string }[]; lang: "en" | "ky" };
           const key = process.env.LOVABLE_API_KEY;
           if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
           if (!Array.isArray(messages) || messages.length === 0) return new Response("messages required", { status: 400 });
 
-          const system = lang === "ky" ? SYSTEM_KY : lang === "ru" ? SYSTEM_RU : SYSTEM_EN;
+          const system = lang === "ky" ? SYSTEM_KY : SYSTEM_EN;
 
           const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
             method: "POST",
