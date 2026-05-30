@@ -51,8 +51,8 @@ export const Route = createFileRoute("/api/diagnose")({
             notes?: string;
             season?: string;
           };
-          const key = process.env.LOVABLE_API_KEY;
-          if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+          const key = process.env.GEMINI_API_KEY;
+          if (!key) return new Response("Missing GEMINI_API_KEY", { status: 500 });
           if (!image?.startsWith("data:image/")) return new Response("invalid image", { status: 400 });
 
           const symptomBlock = symptoms && symptoms.length
@@ -61,11 +61,11 @@ export const Route = createFileRoute("/api/diagnose")({
           const notesBlock = notes ? `Beekeeper notes: ${notes.slice(0, 600)}.` : "";
           const seasonBlock = season ? `Current season: ${season}.` : "";
 
-          const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+          const res = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "Lovable-API-Key": key },
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
             body: JSON.stringify({
-              model: "google/gemini-2.5-pro",
+              model: process.env.GEMINI_DIAGNOSE_MODEL ?? "gemini-2.5-flash",
               messages: [
                 {
                   role: "user",

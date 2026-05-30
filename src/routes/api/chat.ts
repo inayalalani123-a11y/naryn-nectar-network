@@ -17,20 +17,20 @@ export const Route = createFileRoute("/api/chat")({
       POST: async ({ request }) => {
         try {
           const { messages, lang } = (await request.json()) as { messages: { role: string; content: string }[]; lang: "en" | "ky" };
-          const key = process.env.LOVABLE_API_KEY;
-          if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+          const key = process.env.GEMINI_API_KEY;
+          if (!key) return new Response("Missing GEMINI_API_KEY", { status: 500 });
           if (!Array.isArray(messages) || messages.length === 0) return new Response("messages required", { status: 400 });
 
           const system = lang === "ky" ? SYSTEM_KY : SYSTEM_EN;
 
-          const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+          const res = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Lovable-API-Key": key,
+              Authorization: `Bearer ${key}`,
             },
             body: JSON.stringify({
-              model: "google/gemini-3-flash-preview",
+              model: process.env.GEMINI_CHAT_MODEL ?? "gemini-2.5-flash-lite",
               messages: [
                 { role: "system", content: system },
                 ...messages.map((m) => ({ role: m.role, content: m.content })),
